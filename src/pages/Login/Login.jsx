@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
+  const { setUser, setLoading } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +28,31 @@ const Login = () => {
           return toast.error(data.message);
         } else {
           localStorage.setItem("token", data.token);
+
           console.log(data);
+
+          fetch("https://dummyjson.com/auth/me", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${data.token}`,
+            },
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.message === "invalid signature") {
+                setUser(null);
+                setLoading(false);
+              } else {
+                setUser(data);
+                setLoading(false);
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              setUser(null);
+              setLoading(false);
+            });
+
           toast.success("User logged in...");
           navigate("/");
         }

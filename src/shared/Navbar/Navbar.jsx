@@ -2,16 +2,24 @@ import { Link } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import { FaCartShopping } from "react-icons/fa6";
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
+  const { user, loading, setUser, setLoading } = useContext(AuthContext);
   const logout = () => {
+    setLoading(true);
     try {
       //   const token = localStorage.getItem("token");
 
       localStorage.removeItem("token");
+      setUser(null);
+      setLoading(false);
+
       toast.success("User logged out...");
     } catch (error) {
       console.error("Error:", error);
+      setLoading(false);
     }
   };
   return (
@@ -24,19 +32,23 @@ const Navbar = () => {
       <div>
         <div className="flex justify-between gap-4">
           <div className="justify-between hidden gap-4 md:flex">
-            <Link
-              to="/login"
-              className="btn text-[18px] hover:text-white hover:bg-green-500"
-            >
-              Log In
-            </Link>
+            {!loading && !user && (
+              <Link
+                to="/login"
+                className="btn text-[18px] hover:text-white hover:bg-green-500"
+              >
+                Log In
+              </Link>
+            )}
 
-            <Link
-              to="/cart"
-              className="btn text-[18px] hover:text-white hover:bg-green-500"
-            >
-              <FaCartShopping className="text-[24px]" />
-            </Link>
+            {!loading && user && (
+              <Link
+                to="/cart"
+                className="btn text-[18px] hover:text-white hover:bg-green-500"
+              >
+                <FaCartShopping className="text-[24px]" />
+              </Link>
+            )}
           </div>
           <div className="dropdown dropdown-left">
             <div
@@ -54,17 +66,23 @@ const Navbar = () => {
                 <li className="text-[18px]">Home</li>
               </Link>
 
-              <Link to="/login">
-                <li className="text-[18px]">Login</li>
-              </Link>
+              {!loading && !user && (
+                <Link to="/login">
+                  <li className="text-[18px]">Login</li>
+                </Link>
+              )}
 
-              <Link to="/dashboard">
-                <li className="text-[18px]">Cart</li>
-              </Link>
+              {!loading && user && (
+                <Link to="/cart">
+                  <li className="text-[18px]">Cart</li>
+                </Link>
+              )}
 
-              <Link onClick={logout}>
-                <li className="text-[18px]">Logout</li>
-              </Link>
+              {!loading && user && (
+                <Link onClick={logout}>
+                  <li className="text-[18px]">Logout</li>
+                </Link>
+              )}
             </ul>
           </div>
         </div>
