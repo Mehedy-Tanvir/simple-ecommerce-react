@@ -1,14 +1,16 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const authInfo = { userName, password };
     fetch("https://dummyjson.com/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -19,9 +21,19 @@ const Login = () => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        if (data.message === "Invalid credentials") {
+          return toast.error(data.message);
+        } else {
+          localStorage.setItem("token", data.token);
+          console.log(data);
+          toast.success("User logged in...");
+          navigate("/");
+        }
+      })
       .catch((error) => {
         console.log(error);
+        toast.error("Unable to log in...");
       });
   };
 
