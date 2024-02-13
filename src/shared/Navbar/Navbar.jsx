@@ -1,8 +1,19 @@
 import { Link } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import { FaCartShopping } from "react-icons/fa6";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
+  const logout = () => {
+    try {
+      //   const token = localStorage.getItem("token");
+
+      localStorage.removeItem("token");
+      toast.success("User logged out...");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
     <div className="flex justify-between p-4 navbar bg-base-100 font-inter">
       <div className="">
@@ -51,7 +62,7 @@ const Navbar = () => {
                 <li className="text-[18px]">Cart</li>
               </Link>
 
-              <Link>
+              <Link onClick={logout}>
                 <li className="text-[18px]">Logout</li>
               </Link>
             </ul>
