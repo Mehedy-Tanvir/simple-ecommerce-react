@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
+import { FaCartShopping } from "react-icons/fa6";
 
 const Navbar = () => {
   return (
@@ -12,19 +13,18 @@ const Navbar = () => {
       <div>
         <div className="flex justify-between gap-4">
           <div className="justify-between hidden gap-4 md:flex">
-            <Link className="bg-transparent border-none shadow-none btn hover:bg-transparent hover:text-blue-500 text-[18px]">
+            <Link
+              to="/login"
+              className="btn text-[18px] hover:text-white hover:bg-green-500"
+            >
               Log In
             </Link>
 
-            <Link className="btn text-[18px] hover:text-white hover:bg-green-500">
-              Sign up
-            </Link>
-
             <Link
-              to="/dashboard"
+              to="/cart"
               className="btn text-[18px] hover:text-white hover:bg-green-500"
             >
-              Dashboard
+              <FaCartShopping className="text-[24px]" />
             </Link>
           </div>
           <div className="dropdown dropdown-left">
@@ -43,16 +43,12 @@ const Navbar = () => {
                 <li className="text-[18px]">Home</li>
               </Link>
 
-              <Link>
+              <Link to="/login">
                 <li className="text-[18px]">Login</li>
               </Link>
 
-              <Link>
-                <li className="text-[18px]">Register</li>
-              </Link>
-
-              <Link href="/dashboard">
-                <li className="text-[18px]">Dashboard</li>
+              <Link to="/dashboard">
+                <li className="text-[18px]">Cart</li>
               </Link>
 
               <Link>
