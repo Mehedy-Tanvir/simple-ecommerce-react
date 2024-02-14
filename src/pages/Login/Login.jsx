@@ -64,7 +64,7 @@ const Login = () => {
 
   return (
     <div className="mt-10">
-      <h1 className="text-3xl text-center">
+      <h1 className="mb-6 text-3xl text-center">
         Login to <strong>iMart</strong>
       </h1>
       <div className="hero">
@@ -118,7 +118,7 @@ const Login = () => {
                 )}
               </div>
             </div>
-            <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+            <div className="flex flex-col items-center justify-between gap-4">
               <div className="w-full mt-6 form-control">
                 <button
                   type="submit"
@@ -127,11 +127,11 @@ const Login = () => {
                   Login
                 </button>
               </div>
-              <div className="w-full mt-6 form-control">
+              {/* <div className="w-full mt-6 form-control">
                 <button className="text-gray-500 text-[15px] shadow-none bg-transparent border-none btn hover:bg-transparent hover:text-blue-500">
                   Lost Your Password?
                 </button>
-              </div>
+              </div> */}
             </div>
           </form>
         </div>
