@@ -25,7 +25,7 @@ const Navbar = () => {
   return (
     <div className="flex justify-between p-4 navbar bg-base-100 font-inter">
       <div className="">
-        <a className="text-xl btn bg-transparent hover:bg-transparent border-none shadow-none text-[18px]">
+        <a className="btn bg-transparent font-semibold hover:bg-transparent border-none shadow-none text-[32px]">
           iMart
         </a>
       </div>
