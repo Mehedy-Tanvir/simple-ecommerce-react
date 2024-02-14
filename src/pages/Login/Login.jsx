@@ -45,6 +45,8 @@ const Login = () => {
               } else {
                 setUser(data);
                 setLoading(false);
+                toast.success("User logged in...");
+                navigate("/");
               }
             })
             .catch((error) => {
@@ -52,9 +54,6 @@ const Login = () => {
               setUser(null);
               setLoading(false);
             });
-
-          toast.success("User logged in...");
-          navigate("/");
         }
       })
       .catch((error) => {

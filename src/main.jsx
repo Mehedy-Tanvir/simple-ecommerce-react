@@ -7,6 +7,9 @@ import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "./providers/AuthProvider";
+import PrivateRoutes from "./routes/PrivateRoutes/PrivateRoutes";
+import AuthPrivateRoutes from "./routes/AuthPrivateRoutes/AuthPrivateRoutes";
+import Cart from "./pages/Cart/Cart";
 
 const router = createBrowserRouter([
   {
@@ -15,11 +18,27 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home></Home>,
+        element: (
+          <PrivateRoutes>
+            <Home></Home>
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "cart",
+        element: (
+          <PrivateRoutes>
+            <Cart></Cart>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "login",
-        element: <Login></Login>,
+        element: (
+          <AuthPrivateRoutes>
+            <Login></Login>
+          </AuthPrivateRoutes>
+        ),
       },
     ],
   },

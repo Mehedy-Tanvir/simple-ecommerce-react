@@ -7,27 +7,35 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch("https://dummyjson.com/auth/me", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message === "invalid signature") {
+    if (token) {
+      fetch("https://dummyjson.com/auth/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (
+            data.message === "invalid signature" ||
+            data.message === "Invalid/Expired Token!"
+          ) {
+            setUser(null);
+            setLoading(false);
+          } else {
+            setUser(data);
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
           setUser(null);
           setLoading(false);
-        } else {
-          setUser(data);
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        setUser(null);
-        setLoading(false);
-      });
+        });
+    } else {
+      setUser(null);
+      setLoading(false);
+    }
   }, []);
   const authInfo = { user, loading, setUser, setLoading };
   return (
