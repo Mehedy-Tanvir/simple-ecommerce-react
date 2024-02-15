@@ -6,6 +6,8 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchProduct, setSearchProduct] = useState("");
+  const [rangeValue, setRangeValue] = useState(2000);
+
   useEffect(() => {
     fetch("https://dummyjson.com/products")
       .then((res) => res.json())
@@ -14,9 +16,26 @@ const Home = () => {
         setFilteredProducts(data.products);
       });
   }, []);
+
   const handleSearch = () => {
     const matchedProduct = products?.filter(
       (product) => product?.title === searchProduct
+    );
+    if (matchedProduct.length > 0) {
+      setFilteredProducts(matchedProduct);
+      setRangeValue(2000);
+    } else {
+      toast.error("Product not found...");
+      setFilteredProducts(products);
+      setRangeValue(2000);
+    }
+  };
+
+  const handleRangeChange = (event) => {
+    setRangeValue(event.target.value);
+    console.log(rangeValue);
+    const matchedProduct = products?.filter(
+      (product) => product?.price <= rangeValue
     );
     if (matchedProduct.length > 0) {
       setFilteredProducts(matchedProduct);
@@ -46,11 +65,15 @@ const Home = () => {
           </button>
         </div>
         <div className="form-control">
+          <h1 className="mb-2">
+            <strong>Products price less than {rangeValue} ₹</strong>
+          </h1>
           <input
             type="range"
-            min={0}
-            max="100"
-            value="40"
+            min={50}
+            max={2000}
+            value={rangeValue}
+            onChange={handleRangeChange}
             className="range range-success"
           />
         </div>
