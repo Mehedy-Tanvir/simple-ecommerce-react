@@ -1,40 +1,24 @@
+import PropTypes from "prop-types";
+import Rating from "react-rating";
+import { FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 const ProductCard = ({ product }) => {
   return (
     <div className="card cursor-pointer hover:scale-105 ease-in-out duration-300 xl:w-[342px] px-5 pt-5 bg-base-100 items-center active:scale-95">
       <figure className="w-[250px] xl:w-[302px] h-[200px] bg-[#1111110D]">
         <img
           src={product?.thumbnail}
-          alt="Shoes"
+          alt="products"
           className="rounded-xl w-[150px] max-h-[150px]"
         />
       </figure>
       <div className="items-center text-center card-body">
-        <div className="rating" onClick={(event) => event.stopPropagation()}>
-          <input
-            type="radio"
-            name="prod1"
-            className="bg-orange-400 mask mask-star-2"
-          />
-          <input
-            type="radio"
-            name="prod1"
-            className="bg-orange-400 mask mask-star-2"
-          />
-          <input
-            type="radio"
-            name="prod1"
-            className="bg-orange-400 mask mask-star-2"
-            checked
-          />
-          <input
-            type="radio"
-            name="prod1"
-            className="bg-orange-400 mask mask-star-2"
-          />
-          <input
-            type="radio"
-            name="prod1"
-            className="bg-orange-400 mask mask-star-2"
+        <div className="rating">
+          <Rating
+            placeholderRating={product?.rating}
+            emptySymbol={<FaRegStar className="text-2xl text-orange-400" />}
+            placeholderSymbol={<FaStar className="text-2xl text-orange-400" />}
+            fullSymbol={<FaStar className="text-2xl text-orange-400" />}
           />
         </div>
         <h2 className="card-title text-[#111] text-[20px] font-semibold font-work-sans">
@@ -52,5 +36,7 @@ const ProductCard = ({ product }) => {
     </div>
   );
 };
-
+ProductCard.propTypes = {
+  product: PropTypes.object,
+};
 export default ProductCard;
