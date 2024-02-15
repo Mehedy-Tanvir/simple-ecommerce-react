@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
-import { FaCartShopping } from "react-icons/fa6";
 import toast from "react-hot-toast";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
@@ -40,15 +39,6 @@ const Navbar = () => {
                 Log In
               </Link>
             )}
-
-            {!loading && user && (
-              <Link
-                to="/cart"
-                className="btn text-[18px] hover:text-white hover:bg-green-500"
-              >
-                <FaCartShopping className="text-[24px]" />
-              </Link>
-            )}
           </div>
           <div className="dropdown dropdown-left">
             <div
@@ -69,12 +59,6 @@ const Navbar = () => {
               {!loading && !user && (
                 <Link to="/login">
                   <li className="text-[18px]">Login</li>
-                </Link>
-              )}
-
-              {!loading && user && (
-                <Link to="/cart">
-                  <li className="text-[18px]">Cart</li>
                 </Link>
               )}
 

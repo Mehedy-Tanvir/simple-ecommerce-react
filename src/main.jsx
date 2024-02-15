@@ -9,26 +9,19 @@ import { Toaster } from "react-hot-toast";
 import AuthProvider from "./providers/AuthProvider";
 import PrivateRoutes from "./routes/PrivateRoutes/PrivateRoutes";
 import AuthPrivateRoutes from "./routes/AuthPrivateRoutes/AuthPrivateRoutes";
-import Cart from "./pages/Cart/Cart";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
         element: (
           <PrivateRoutes>
             <Home></Home>
-          </PrivateRoutes>
-        ),
-      },
-      {
-        path: "cart",
-        element: (
-          <PrivateRoutes>
-            <Cart></Cart>
           </PrivateRoutes>
         ),
       },
