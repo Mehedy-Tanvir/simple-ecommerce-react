@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is a simple e-commerce app. Users need to be authenticated for seeing the products and adding to cart in home page. This is just a frontend. It sends post request to server for authentication and getting products.
+This is a simple e-commerce app. Users need to be authenticated for seeing the products and adding to cart in home page. This is just a frontend. It sends requests to server for authentication and getting products.
 
 ## Live Link
 
