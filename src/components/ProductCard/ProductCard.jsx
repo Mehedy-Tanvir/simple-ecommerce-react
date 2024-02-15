@@ -2,7 +2,22 @@ import PropTypes from "prop-types";
 import Rating from "react-rating";
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
-const ProductCard = ({ product }) => {
+import toast from "react-hot-toast";
+const ProductCard = ({ product, cartProducts, setCartProducts, setAmount }) => {
+  const handleAddToCart = (addedProduct) => {
+    const currentCartProducts = [...cartProducts];
+    currentCartProducts.push(addedProduct);
+    setCartProducts(currentCartProducts);
+    updateAmount(currentCartProducts);
+    toast.success("Product added to cart...");
+  };
+  const updateAmount = (currentCartProducts) => {
+    const totalPrice = currentCartProducts.reduce(
+      (total, product) => total + product.price,
+      0
+    );
+    setAmount(totalPrice);
+  };
   return (
     <div className="card cursor-pointer hover:scale-105 ease-in-out duration-300 xl:w-[342px] px-5 pt-5 bg-base-100 items-center active:scale-95">
       <figure className="w-[250px] xl:w-[302px] h-[200px] bg-[#1111110D]">
@@ -28,7 +43,10 @@ const ProductCard = ({ product }) => {
           {product?.price} ₹
         </p>
         <div className="w-full mt-6">
-          <button className="btn text-white hover:bg-orange-400 bg-orange-500 text-[15px]">
+          <button
+            onClick={() => handleAddToCart(product)}
+            className="btn text-white hover:bg-orange-400 bg-orange-500 text-[15px]"
+          >
             Add to Cart
           </button>
         </div>
@@ -38,5 +56,8 @@ const ProductCard = ({ product }) => {
 };
 ProductCard.propTypes = {
   product: PropTypes.object,
+  cartProducts: PropTypes.array,
+  setCartProducts: PropTypes.func,
+  setAmount: PropTypes.func,
 };
 export default ProductCard;

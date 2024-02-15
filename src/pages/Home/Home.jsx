@@ -6,6 +6,8 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchProduct, setSearchProduct] = useState("");
+  const [cartProducts, setCartProducts] = useState([]);
+  const [amount, setAmount] = useState(0);
   const [rangeValue, setRangeValue] = useState(2000);
 
   useEffect(() => {
@@ -30,12 +32,12 @@ const Home = () => {
       setRangeValue(2000);
     }
   };
-
   const handleRangeChange = (event) => {
-    setRangeValue(event.target.value);
-    console.log(rangeValue);
+    const value = parseInt(event.target.value);
+    setRangeValue(value);
+
     const matchedProduct = products?.filter(
-      (product) => product?.price <= rangeValue
+      (product) => parseInt(product?.price) <= value
     );
     if (matchedProduct.length > 0) {
       setFilteredProducts(matchedProduct);
@@ -47,6 +49,19 @@ const Home = () => {
 
   return (
     <div className="bg-[#1111110D] py-10 px-4">
+      <div className="flex flex-col items-center justify-center mb-10">
+        <h1 className="mb-8 text-5xl font-bold text-center">My Cart</h1>
+        <h1 className="text-2xl text-left">
+          <strong>Products:</strong>{" "}
+          <span className="font-medium text-red-500">
+            {cartProducts.length}
+          </span>
+        </h1>
+        <h1 className="text-2xl text-left">
+          <strong>Amount:</strong>{" "}
+          <span className="font-medium text-red-500">{amount} ₹</span>
+        </h1>
+      </div>
       <h1 className="mb-8 text-5xl font-bold text-center">Our Products</h1>
       <div className="flex flex-col items-center justify-center gap-10 mb-10">
         <div className="flex items-center justify-center mt-4 join xl:justify-start">
@@ -81,7 +96,14 @@ const Home = () => {
       <div className="flex items-center justify-center">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredProducts?.map((product, idx) => (
-            <ProductCard product={product} key={idx}></ProductCard>
+            <ProductCard
+              cartProducts={cartProducts}
+              setCartProducts={setCartProducts}
+              product={product}
+              amount={amount}
+              setAmount={setAmount}
+              key={idx}
+            ></ProductCard>
           ))}
         </div>
       </div>
