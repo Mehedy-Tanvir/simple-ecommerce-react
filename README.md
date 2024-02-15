@@ -4,6 +4,10 @@
 
 This is a simple e-commerce app. Users need to be authenticated for seeing the products and adding to cart in home page. This is just a frontend. It sends post request to server for authentication and getting products.
 
+## Live Link
+
+[https://merry-pothos-ff5d81.netlify.app](https://merry-pothos-ff5d81.netlify.app)
+
 ## Running the Application Locally
 
 To run the app locally, follow these steps:
