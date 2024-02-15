@@ -5,19 +5,22 @@ import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
+  // getting states using context api
   const { user, loading, setUser, setLoading } = useContext(AuthContext);
+  // user logout function
   const logout = () => {
     setLoading(true);
     try {
-      //   const token = localStorage.getItem("token");
-
+      // removing token from local storage
       localStorage.removeItem("token");
+      //   updating states
       setUser(null);
       setLoading(false);
 
       toast.success("User logged out...");
     } catch (error) {
       console.error("Error:", error);
+      //   updating states
       setLoading(false);
     }
   };
@@ -31,6 +34,7 @@ const Navbar = () => {
       <div>
         <div className="flex justify-between gap-4">
           <div className="justify-between hidden gap-4 md:flex">
+            {/* conditional rendering of login */}
             {!loading && !user && (
               <Link
                 to="/login"
@@ -55,13 +59,13 @@ const Navbar = () => {
               <Link to="/">
                 <li className="text-[18px]">Home</li>
               </Link>
-
+              {/* conditional rendering of login */}
               {!loading && !user && (
                 <Link to="/login">
                   <li className="text-[18px]">Login</li>
                 </Link>
               )}
-
+              {/* conditional rendering of logout */}
               {!loading && user && (
                 <Link onClick={logout}>
                   <li className="text-[18px]">Logout</li>

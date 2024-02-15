@@ -20,6 +20,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
+          // private route for authenticated user
           <PrivateRoutes>
             <Home></Home>
           </PrivateRoutes>
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: (
+          // private route for non authenticated user
           <AuthPrivateRoutes>
             <Login></Login>
           </AuthPrivateRoutes>
@@ -39,8 +41,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    {/* provider for authentication information */}
     <AuthProvider>
+      {/* giving notification */}
       <Toaster />
+      {/* react router */}
       <RouterProvider router={router} />
     </AuthProvider>
   </React.StrictMode>

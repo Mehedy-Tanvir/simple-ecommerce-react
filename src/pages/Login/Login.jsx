@@ -13,6 +13,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // sending post request to server for login
     fetch("https://dummyjson.com/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -27,10 +28,9 @@ const Login = () => {
         if (data.message === "Invalid credentials") {
           return toast.error(data.message);
         } else {
+          // saving the token to local storage
           localStorage.setItem("token", data.token);
-
-          console.log(data);
-
+          // sending the post request to server with token to get user information
           fetch("https://dummyjson.com/auth/me", {
             method: "GET",
             headers: {
@@ -39,6 +39,7 @@ const Login = () => {
           })
             .then((res) => res.json())
             .then((data) => {
+              // updating the states
               if (data.message === "invalid signature") {
                 setUser(null);
                 setLoading(false);
@@ -70,6 +71,7 @@ const Login = () => {
       <div className="hero">
         <div className="rounded-lg shadow-md card-body md:w-[450px]">
           <form onSubmit={handleSubmit}>
+            {/* username input */}
             <div className="form-control">
               <label className="label">
                 <span className="text-gray-500 label-text">
@@ -85,6 +87,7 @@ const Login = () => {
                 onChange={(e) => setUserName(e.target.value)}
               />
             </div>
+            {/* password input */}
             <div className="mt-5 form-control">
               <label className="label">
                 <span className="text-gray-500 label-text">
@@ -99,6 +102,7 @@ const Login = () => {
                   className="w-full p-4 border-2 border-gray-300 rounded-lg outline-none focus:shadow-md hover:shadow-md hover:border-blue-500 focus:border-blue-500"
                   required
                   value={password}
+                  //   password showing and hiding functionality
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 {showPassword ? (
@@ -119,6 +123,7 @@ const Login = () => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-between gap-4">
+              {/* login button */}
               <div className="w-full mt-6 form-control">
                 <button
                   type="submit"
@@ -127,11 +132,6 @@ const Login = () => {
                   Login
                 </button>
               </div>
-              {/* <div className="w-full mt-6 form-control">
-                <button className="text-gray-500 text-[15px] shadow-none bg-transparent border-none btn hover:bg-transparent hover:text-blue-500">
-                  Lost Your Password?
-                </button>
-              </div> */}
             </div>
           </form>
         </div>

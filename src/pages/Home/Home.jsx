@@ -11,18 +11,22 @@ const Home = () => {
   const [rangeValue, setRangeValue] = useState(2000);
 
   useEffect(() => {
+    // fetching products from server
     fetch("https://dummyjson.com/products")
       .then((res) => res.json())
       .then((data) => {
+        // saving products to states
         setProducts(data.products);
         setFilteredProducts(data.products);
       });
   }, []);
-
+  // function for search by name
   const handleSearch = () => {
+    // filtering by searched name
     const matchedProduct = products?.filter(
       (product) => product?.title === searchProduct
     );
+    // updating the states
     if (matchedProduct.length > 0) {
       setFilteredProducts(matchedProduct);
       setRangeValue(2000);
@@ -32,13 +36,15 @@ const Home = () => {
       setRangeValue(2000);
     }
   };
+  //   function for filtering by price
   const handleRangeChange = (event) => {
     const value = parseInt(event.target.value);
     setRangeValue(value);
-
+    // filtering products below the price range
     const matchedProduct = products?.filter(
       (product) => parseInt(product?.price) <= value
     );
+    // updating the states
     if (matchedProduct.length > 0) {
       setFilteredProducts(matchedProduct);
     } else {
@@ -64,6 +70,7 @@ const Home = () => {
       </div>
       <h1 className="mb-8 text-5xl font-bold text-center">Our Products</h1>
       <div className="flex flex-col items-center justify-center gap-10 mb-10">
+        {/* searching feature */}
         <div className="flex items-center justify-center mt-4 join xl:justify-start">
           <input
             className="w-[150px] input input-bordered join-item h-[56px] font-work-sans lg:w-[194px] lg:text-[20px]"
@@ -79,6 +86,7 @@ const Home = () => {
             Search
           </button>
         </div>
+        {/* filter by price feature */}
         <div className="form-control">
           <h1 className="mb-2">
             <strong>Products price less than {rangeValue} ₹</strong>
@@ -93,20 +101,23 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="flex items-center justify-center">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredProducts?.map((product, idx) => (
-            <ProductCard
-              cartProducts={cartProducts}
-              setCartProducts={setCartProducts}
-              product={product}
-              amount={amount}
-              setAmount={setAmount}
-              key={idx}
-            ></ProductCard>
-          ))}
+      {/* products are displayed here */}
+      {filteredProducts?.length > 0 && (
+        <div className="flex items-center justify-center">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {filteredProducts?.map((product, idx) => (
+              <ProductCard
+                cartProducts={cartProducts}
+                setCartProducts={setCartProducts}
+                product={product}
+                amount={amount}
+                setAmount={setAmount}
+                key={idx}
+              ></ProductCard>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
